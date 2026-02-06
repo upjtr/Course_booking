@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จองคอร์สเรียน | Course Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Prompt", sans-serif;
+      }
+      .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .calendar-day:hover {
+        background-color: #3b82f6;
+        color: white;
+      }
+      .calendar-day.selected {
+        background-color: #2563eb;
+        color: white;
+      }
+      .calendar-day.has-booking {
+        background-color: #10b981;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <i class="fas fa-graduation-cap text-3xl text-indigo-600"></i>
+            <h1 class="text-2xl font-bold text-gray-800">ระบบจองคอร์สเรียน</h1>
+          </div>
+          <nav class="flex space-x-6">
+            <a
+              href="#courses"
+              class="text-gray-600 hover:text-indigo-600 transition"
+              >คอร์สเรียน</a
+            >
+            <a
+              href="#booking"
+              class="text-gray-600 hover:text-indigo-600 transition"
+              >จองเรียน</a
+            >
+            <a
+              href="#calendar"
+              class="text-gray-600 hover:text-indigo-600 transition"
+              >ปฏิทิน</a
+            >
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+          เลือกคอร์สเรียนที่ใช่สำหรับคุณ
+        </h2>
+        <p class="text-xl text-gray-600">
+          จองคอร์สเรียนออนไลน์ได้ง่ายๆ เลือกวันที่สะดวก แล้วเริ่มต้นเรียนรู้
+        </p>
+      </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-12 px-4">
+      <div class="max-w-7xl mx-auto">
+        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+          <i class="fas fa-book-open mr-2 text-indigo-600"></i
+          >คอร์สเรียนที่เปิดสอน
+        </h3>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          id="courseList"
+        >
+          <!-- Courses will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking" class="py-12 px-4 bg-white">
+      <div class="max-w-2xl mx-auto">
+        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+          <i class="fas fa-calendar-check mr-2 text-indigo-600"></i
+          >ฟอร์มจองคอร์สเรียน
+        </h3>
+        <form
+          id="bookingForm"
+          class="space-y-6 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-lg"
+        >
+          <!-- ชื่อผู้จอง -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-user mr-2"></i>ชื่อ-นามสกุล
+            </label>
+            <input
+              type="text"
+              id="studentName"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              placeholder="กรอกชื่อ-นามสกุล"
+            />
+          </div>
+
+          <!-- อีเมล -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-envelope mr-2"></i>อีเมล
+            </label>
+            <input
+              type="email"
+              id="studentEmail"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              placeholder="example@email.com"
+            />
+          </div>
+
+          <!-- เบอร์โทร -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-phone mr-2"></i>เบอร์โทรศัพท์
+            </label>
+            <input
+              type="tel"
+              id="studentPhone"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              placeholder="0812345678"
+            />
+          </div>
+
+          <!-- เลือกคอร์ส -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-book mr-2"></i>เลือกคอร์สที่ต้องการเรียน
+            </label>
+            <select
+              id="selectedCourse"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+            >
+              <option value="">-- เลือกคอร์สเรียน --</option>
+            </select>
+          </div>
+
+          <!-- วันที่เรียน -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-calendar-alt mr-2"></i>วันที่ต้องการเข้าเรียน
+            </label>
+            <input
+              type="date"
+              id="bookingDate"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+            />
+          </div>
+
+          <!-- เวลาเรียน -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-clock mr-2"></i>เวลาที่ต้องการเรียน
+            </label>
+            <select
+              id="bookingTime"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+            >
+              <option value="">-- เลือกเวลา --</option>
+              <option value="09:00 - 10:30">09:00 - 10:30</option>
+              <option value="10:30 - 12:00">10:30 - 12:00</option>
+              <option value="13:00 - 14:30">13:00 - 14:30</option>
+              <option value="14:30 - 16:00">14:30 - 16:00</option>
+              <option value="16:00 - 17:30">16:00 - 17:30</option>
+              <option value="18:00 - 19:30">18:00 - 19:30</option>
+            </select>
+          </div>
+
+          <!-- หมายเหตุ -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">
+              <i class="fas fa-sticky-note mr-2"></i>หมายเหตุเพิ่มเติม (ถ้ามี)
+            </label>
+            <textarea
+              id="notes"
+              rows="3"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              placeholder="ข้อมูลเพิ่มเติมที่ต้องการแจ้ง..."
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+          >
+            <i class="fas fa-paper-plane"></i>
+            <span>ส่งข้อมูลจองเรียน</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">
+          <i class="fas fa-calendar mr-2 text-indigo-600"></i>ปฏิทินการจอง
+        </h3>
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <!-- Calendar Header -->
+          <div class="flex items-center justify-between mb-6">
+            <button
+              id="prevMonth"
+              class="p-2 hover:bg-gray-100 rounded-lg transition"
+            >
+              <i class="fas fa-chevron-left text-gray-600"></i>
+            </button>
+            <h4
+              id="currentMonth"
+              class="text-xl font-semibold text-gray-800"
+            ></h4>
+            <button
+              id="nextMonth"
+              class="p-2 hover:bg-gray-100 rounded-lg transition"
+            >
+              <i class="fas fa-chevron-right text-gray-600"></i>
+            </button>
+          </div>
+
+          <!-- Calendar Days Header -->
+          <div class="grid grid-cols-7 gap-2 mb-4">
+            <div class="text-center font-semibold text-red-500 py-2">อา</div>
+            <div class="text-center font-semibold text-gray-600 py-2">จ</div>
+            <div class="text-center font-semibold text-gray-600 py-2">อ</div>
+            <div class="text-center font-semibold text-gray-600 py-2">พ</div>
+            <div class="text-center font-semibold text-gray-600 py-2">พฤ</div>
+            <div class="text-center font-semibold text-gray-600 py-2">ศ</div>
+            <div class="text-center font-semibold text-blue-500 py-2">ส</div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div id="calendarGrid" class="grid grid-cols-7 gap-2">
+            <!-- Calendar days will be loaded here -->
+          </div>
+
+          <!-- Legend -->
+          <div class="mt-6 flex justify-center space-x-6 text-sm">
+            <div class="flex items-center space-x-2">
+              <div class="w-4 h-4 bg-green-500 rounded"></div>
+              <span>มีการจอง</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <div class="w-4 h-4 bg-blue-500 rounded"></div>
+              <span>วันที่เลือก</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking List for Selected Date -->
+        <div
+          id="bookingDetails"
+          class="mt-6 bg-white rounded-2xl shadow-lg p-6 hidden"
+        >
+          <h4 class="text-lg font-semibold text-gray-800 mb-4">
+            <i class="fas fa-list mr-2 text-indigo-600"></i>รายการจองวันที่
+            <span id="selectedDateText"></span>
+          </h4>
+          <div id="bookingList" class="space-y-3">
+            <!-- Booking items will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">
+          &copy; 2026 ระบบจองคอร์สเรียน | Course Booking System
+        </p>
+      </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div
+      id="successModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div
+        class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center transform transition-all"
+      >
+        <div
+          class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <i class="fas fa-check text-4xl text-green-500"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">จองสำเร็จ!</h3>
+        <p class="text-gray-600 mb-6">
+          ข้อมูลการจองของคุณถูกบันทึกเรียบร้อยแล้ว
+        </p>
+        <button
+          onclick="closeModal()"
+          class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
+        >
+          ตกลง
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      id="loadingOverlay"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div class="bg-white rounded-2xl p-8 text-center">
+        <div
+          class="animate-spin w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4"
+        ></div>
+        <p class="text-gray-600">กำลังบันทึกข้อมูล...</p>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
