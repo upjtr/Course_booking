@@ -1,6 +1,7 @@
 // ===== Configuration =====
 // ⚠️ สำคัญ: ให้เปลี่ยน URL นี้เป็น URL ของ Google Apps Script ที่คุณ Deploy
-const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const GOOGLE_SCRIPT_URL =
+  "AKfycbxDvTMU61jpS8zN9rLJI8BsIRGqjqp91PC60iX9ZWhDIqjDGBR9KsPoHMf1sDqxwFJj";
 
 // ===== Course Data =====
 const courses = [
@@ -353,7 +354,10 @@ async function handleSubmit(e) {
     console.error("Error:", error);
 
     // ถ้า Google Script URL ยังไม่ได้ตั้งค่า ให้ save ใน local
-    if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    if (
+      GOOGLE_SCRIPT_URL ===
+      "https://script.google.com/macros/s/AKfycbxDvTMU61jpS8zN9rLJI8BsIRGqjqp91PC60iX9ZWhDIqjDGBR9KsPoHMf1sDqxwFJj/exec"
+    ) {
       // Demo mode - save locally
       bookings.push(formData);
       localStorage.setItem("bookings", JSON.stringify(bookings));
