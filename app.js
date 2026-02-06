@@ -355,8 +355,8 @@ async function handleSubmit(e) {
 
     // ถ้า Google Script URL ยังไม่ได้ตั้งค่า ให้ save ใน local
     if (
-      GOOGLE_SCRIPT_URL ===
-      "https://script.google.com/macros/s/AKfycbxDvTMU61jpS8zN9rLJI8BsIRGqjqp91PC60iX9ZWhDIqjDGBR9KsPoHMf1sDqxwFJj/exec"
+      !GOOGLE_SCRIPT_URL ||
+      GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
     ) {
       // Demo mode - save locally
       bookings.push(formData);
@@ -372,7 +372,10 @@ async function handleSubmit(e) {
 
 // ===== Google Sheets Integration =====
 async function sendToGoogleSheets(data) {
-  if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+  if (
+    !GOOGLE_SCRIPT_URL ||
+    GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
+  ) {
     throw new Error("Google Script URL not configured");
   }
 
@@ -397,7 +400,10 @@ async function loadBookings() {
   }
 
   // Try to load from Google Sheets if configured
-  if (GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+  if (
+    GOOGLE_SCRIPT_URL &&
+    GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
+  ) {
     try {
       const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getBookings`);
       const data = await response.json();
