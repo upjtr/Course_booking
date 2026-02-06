@@ -1,7 +1,7 @@
 // ===== Configuration =====
 // ⚠️ สำคัญ: ให้เปลี่ยน URL นี้เป็น URL ของ Google Apps Script ที่คุณ Deploy
 const GOOGLE_SCRIPT_URL =
-  "AKfycbxDvTMU61jpS8zN9rLJI8BsIRGqjqp91PC60iX9ZWhDIqjDGBR9KsPoHMf1sDqxwFJj";
+  "https://script.google.com/macros/s/AKfycbxDvTMU61jpS8zN9rLJI8BsIRGqjqp91PC60iX9ZWhDIqjDGBR9KsPoHMf1sDqxwFJj/exec";
 
 // ===== Course Data =====
 const courses = [
